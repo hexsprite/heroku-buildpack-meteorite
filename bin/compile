@@ -123,6 +123,17 @@ VENDORED_METEOR="$(mktmpdir meteor)"
 curl https://install.meteor.com | HOME="$VENDORED_METEOR" /bin/sh | indent
 echo "Meteor installed" | indent
 
+echo "Removing test packages"
+rm -r $BUILD_DIR/tests
+function filter_packages {
+  filename=$1
+  grep -v -f $BUILD_DIR/test.exclude ${filename} >${filename}.new
+  mv ${filename} ${filename}.bak
+  mv ${filename}.new ${filename}
+}
+filter_packages .meteor/packages
+filter_packages .meteor/versions
+
 echo "Installing packages" | indent
 HOME="$BUILD_DIR" mrt install --force | indent
 echo "Building meteor bundle" | indent
