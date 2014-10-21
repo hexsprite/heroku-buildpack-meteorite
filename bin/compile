@@ -124,7 +124,7 @@ curl https://install.meteor.com | HOME="$VENDORED_METEOR" /bin/sh | indent
 echo "Meteor installed" | indent
 
 echo "Removing test packages"
-rm -r $BUILD_DIR/tests
+rm -fr $BUILD_DIR/tests
 function filter_packages {
   filename=$1
   grep -v -f $BUILD_DIR/test.exclude ${filename} >${filename}.new
