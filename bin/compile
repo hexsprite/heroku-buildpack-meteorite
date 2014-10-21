@@ -131,8 +131,10 @@ function filter_packages {
   mv ${filename} ${filename}.bak
   mv ${filename}.new ${filename}
 }
-filter_packages .meteor/packages
-filter_packages .meteor/versions
+if [ -f $BUILD_DIR/test.exclude ]; then
+  filter_packages .meteor/packages
+  filter_packages .meteor/versions
+fi
 
 echo "Installing packages" | indent
 HOME="$BUILD_DIR" mrt install --force | indent
